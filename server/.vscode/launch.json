@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "app.webapp",
+                "FLASK_APP": "iotlab.__init__",
                 "FLASK_DEBUG": "1"
             },
             "args": [

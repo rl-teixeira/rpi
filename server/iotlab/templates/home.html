@@ -7,6 +7,13 @@
         <title>Hello</title>
     </head>
     <body>
-        <h1>Hello</h1>
+        <button onclick="testMQTT()"> Hello </button>
+        <script>
+            function testMQTT(){
+                let mqttMessage = new Paho.MQTT.Message("test")
+                mqttMessage.destinationName = "testTopic"
+                MQTT_CLIENT.send(mqttMessage)
+            }
+        </script>
     </body>
 </html>

@@ -1,0 +1,152 @@
+/* Palette from darker to lighter
+    #538392
+    #6295A2
+    #80B9AD
+    #B3E2A7
+    #F9F9F9
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F9F9;
+    color: #333;
+}
+
+header {
+    background-color: #6295A2;
+    color: #F9F9F9;
+    padding: 0;
+    text-align: center;
+    display: flex;
+}
+
+
+main {
+    padding: 1em;
+}
+
+footer {
+    background-color: #333;
+    color: #F9F9F9;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+#header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#header li {
+    float: left;
+    padding: 0;
+}
+
+#header li a{
+    display: block;
+    text-align: center;
+    padding: 1em 5px;
+    text-decoration: none;
+    color: #F9F9F9;
+}
+
+#header li a:hover {
+    background-color: #538392;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flashes li {
+    margin: 0.5em 0;
+    padding: 0.5em;
+    border-radius: 4px;
+}
+
+.flashes .success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.flashes .error {
+    background-color: #f44336;
+    color: white;
+}
+
+.login-container {
+    width: 100%;  
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-wrap {
+    width: 390px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+    display: block;
+    font-size: 30px;
+    text-align: center;
+}
+
+.input-wrap {
+    width: 100%;
+    position: relative;
+    padding: 5vh 5vw;
+    
+}
+
+.input {
+    border-radius: 10px;
+    font-size: 15px;
+    color: #333;
+    display: block;
+    width: 100%;
+    height: 45px;
+    padding: 0 5px;
+}
+
+.login-btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.login-btn-wrap {
+    width: 100%;
+    display: block;
+    border-radius: 25px;
+    padding: 20px 0;
+    background-color: #333;
+}
+
+.login-btn {
+    font-size: 15px;
+    color: #F9F9F9;
+    text-transform: uppercase;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}

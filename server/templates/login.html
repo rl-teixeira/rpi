@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="login-container">
+        <div class="login-wrap">
+            <form class="login-form" action="{{ url_for('login') }}" method="post">
+                <span class="login-form-title">Welcome</span>
+                <div class="input-wrap">    
+                    <input class="input" type="text" id="email" name="email" placeholder="email" required>
+                </div>
+                <div class="input-wrap">
+                    <input class="input" type="password" id="password" name="password" placeholder="password" required>
+                </div>
+                <div class="login-bnt-container">
+                    <div class="login-btn-wrap">
+                        <button class="login-btn" type="submit">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{category}}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith%}
+{% endblock %}
+
+
+
+

@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="testbtn-container center">
+        <form action="{{ url_for('mqtt_test') }}" method="POST">
+            <button class="btn" name="message" type="submit" value="1">send 1</button>
+        </form>
+        <form action="{{ url_for('mqtt_test') }}" method="POST">
+            <button class="btn" name="message" type="submit" value="0">send 0</button>
+        </form>
+    </div>
+{% endblock %}

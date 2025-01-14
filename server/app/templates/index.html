@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" />
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico')}}"/>
+        <title>Hello</title>
+    </head>
+    <body>
+        <header>
+            <div id="header" class="container"> 
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/graph">Plot</a></li>
+                    <li><a href="button_test_page">Test</a></li>
+                    <li><a href="/upload">Upload</a></li>
+                </ul>
+                <div class="login-container">
+                    {% if not is_logged_in %}
+                        <form action="/login" method="POST" id="login-form">
+                            <input type="email" placeholder="email" name="email">
+                            <input type="text" placeholder="number" name="stu_number">
+                            <button type="submit">Login</button>
+                        </form>
+                    {% else %}
+                        <button action= "/logout" onclick="clearCookies()" id="logout-btn">Logout</button>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+            <div class="center">
+                <h1>ok, this kinda works</h1>
+                <img src="{{ url_for('static', filename='/images/imaybestupid.jpg')}}" width="300">
+            </div>
+            <div class="logged-table">
+                <table id="number-email"><tbody></tbody></table>
+            </div>
+        </main>
+        <footer>
+            
+        </footer>
+        <script>
+            function clearCookies() {
+                document.cookie = "email=; expires= Tue, 11 Sep 2001 13:14:00 GMT+1, path=/;";
+                location.reload();
+            }
+            function logout(){
+                clearCookies();
+            }
+        </script>
+        <script>
+            async function fetchTable() {
+                try{
+                    const response = await fetch('get_table');
+                    const data = await response.json();
+                    const table = document.getElementById('number-email').querySelector('tbody');
+                    table.innerHTML = '';
+                    for (const [key, value] of Object.entries(data)){
+                        const row = document.createElement('tr');
+                        const keyCell = document.createElement('td');
+                        const valueCell = document.createElement('td');
+                        keyCell.textContent = key;
+                        valueCell.textContent = value;
+                        row.appendChild(keyCell);
+                        row.appendChild(valueCell);
+                        table.appendChild(row);
+                    }
+                } catch(error){
+                    console.error('Error getting logged in table:', error)
+                }
+            }
+            window.onload = fetchTable;
+        </script>
+        <script>
+            const loginForm = document.querySelector("login-form");
+            const logoutBtn = document.querySelector("logout-btn");
+            loginForm.addEventListener('submit', async (event) => {
+                const formData = new FormData(loginForm);
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin' //so cookies are in the request/response
+            });
+            const result = await response.json();
+            })
+            logoutBtn.addEventListener('click', logout())
+        </script>
+    </body>
+</html>

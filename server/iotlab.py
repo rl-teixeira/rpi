@@ -33,6 +33,7 @@ socketio = SocketIO(app)
 #socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=True)
 
 actuator = 0
+logged_in_students = {}
 
 @app.route("/")  
 def index():
@@ -40,9 +41,11 @@ def index():
 
 @app.route("/home")
 def home():
-    user_email = request.cookies.get('email')
-    is_logged_in = user_email is not None
-    return render_template("index.html", is_logged_in=is_logged_in)
+    stu_number = request.cookies.get('stu_number')
+    if stu_number in logged_in_students.keys():
+        return render_template("index.html", is_logged_in=True)
+    else:
+        return render_template("index.html", is_logged_in=False)
 
 @app.route('/graph')
 def graph():
@@ -52,13 +55,28 @@ def graph():
 def login():
     if request.method == 'POST':
         email = request.form['email']
-        response = make_response(redirect(url_for('home')))
-        if "fct.unl.pt" in email:
+        stu_number = request.form['stu_number']
+        if ("fct.unl.pt" in email) and (stu_number not in logged_in_students.keys()):
+            response = jsonify({"success":True})
             response.set_cookie('email', email, max_age=60*60*24*2)
+            response.set_cookie('stu_number', stu_number, max_age=60*60*24*2)
+            logged_in_students[stu_number] = email
+        else:
+            response = jsonify({"success":False})
         return response
     #return render_template("login.html")
 
-@app.route("/upload", methods=['POST'])
+@app.route("/logout", methods=['POST'])
+def logout():
+    logged_in_students.pop(request.cookies.get("stu_number"))
+    return render_template("index.html")
+
+@app.route('/get_table')
+def get_table():
+    print(logged_in_students)
+    return jsonify(logged_in_students)
+
+@app.route("/upload")
 def upload():
     return render_template("upload.html")
 

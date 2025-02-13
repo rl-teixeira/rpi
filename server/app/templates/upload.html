@@ -1,5 +1,27 @@
 {% extends "index.html" %}
 
 {% block content %}
-    
+    <div class="upload-container">
+        <h1 id="title">Upload your code</h1>
+        <p id="description">You can upload a file or type the code directly</p>
+
+        <div id="choice-btn-container">
+            <button id="choice-btn-file" class="btn">File upload</button>
+            <button id="choice-btn-text" class="btn">Text upload</button>
+        </div>
+
+        <div id="file-input-container" class="hidden">
+            <input type="file" id="file-input" class="center centered-input">
+        </div>
+        <div id="text-input-container" class="hidden">
+            <textarea id="text-input" class="center centered-input" rows="35" cols="100">import numpy as np&#10reference=np.ones(100)&#10controller():&#10&#x09#controller code&#10&#x094return</textarea>
+        </div>
+
+        <div id="action-btn-container" class="hidden">
+            <button id="back-btn" class="btn">Back</button>
+            <button id="upload-btn" class="btn">Upload</button>
+        </div>
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='js/upload.js')}}"></script>
 {% endblock %}

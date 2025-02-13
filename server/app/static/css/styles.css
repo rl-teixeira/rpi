@@ -80,6 +80,18 @@ footer {
     background-color: #538392;
 }
 
+#text-input {
+    resize: none;
+}
+
+#descriptio {
+    margin: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
 .graph-container {
     margin: auto;
     display: block;
@@ -158,6 +170,28 @@ footer {
     max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
+}
+
+.upload-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.centered-input {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 16px;
+    width: auto;
+}
+
+.action-btn-container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    display: flex;
+    gap: 10px;
+    transform: translateX(-50%);
 }
 
 main {

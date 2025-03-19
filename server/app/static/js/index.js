@@ -51,6 +51,7 @@ async function login(event) {
         if (result.success) {
             fetchAuthState(); // Update UI
             fetchTable(); // Update table if needed
+            window.reload;
         } else {
             alert('Login failed. Please check your email and student number.');
         }
@@ -98,7 +99,11 @@ async function fetchTable() {
         console.error('Error getting logged in table:', error)
     }
 }
-window.onload = () => {
+/*window.onload = () => {
     fetchAuthState();
     fetchTable();
-}
+}*/
+document.addEventListener("DOMContentLoaded", () => {
+    fetchAuthState();
+    fetchTable();
+})

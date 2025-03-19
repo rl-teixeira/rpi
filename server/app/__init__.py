@@ -3,7 +3,6 @@ from flask_mqtt import Mqtt
 from flask_socketio import SocketIO
 
 from app.routes import register_routes
-from app.mqtt import register_mqtt_handlers
 from config import Config
 
 import os
@@ -17,6 +16,7 @@ def create_app():
     app.config.from_object(Config)
     try:
         mqtt.init_app(app)
+        from app.mqtt_app import register_mqtt_handlers
         register_mqtt_handlers(mqtt)
     except:
         print("No connection to MQTT broker")

@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for
+from flask import render_template, request, jsonify, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
 import os
+from app.mqtt_app import control_mode
+from app.supervisor import run_sim
 
 logged_in_students = {}
 
@@ -9,9 +11,6 @@ ALLOWED_EXTENSIONS = {'py', 'txt'}
 def register_routes(app):
 
     @app.route("/")  
-    def index():
-        return redirect(url_for('home'))
-
     @app.route("/home")
     def home():
         stu_number = request.cookies.get('stu_number')
@@ -23,6 +22,10 @@ def register_routes(app):
     @app.route('/graph')
     def graph():
         return render_template("graph.html")
+
+    @app.route('/simulations')
+    def simulations():
+        return render_template("simulations.html")
 
     @app.route("/login", methods=['POST'])
     def login():
@@ -54,14 +57,32 @@ def register_routes(app):
         stu_number = request.cookies.get('stu_number')
         is_logged_in = stu_number in logged_in_students.keys()
         return jsonify({"is_logged_in": is_logged_in})
+    
+    @app.route('/get_sims/<stu_number>', methods=['GET'])
+    def get_sims(stu_number):
+        stu_dir = os.path.join(app.config['SIMS_FOLDER'],stu_number)
+        if not os.path.exists(stu_dir):
+            return jsonify({'success': False, 'message':'No simulations found'}), 404
+        files = sorted(os.listdir(stu_dir))
+        table_entries = []
+        for file in files:
+            try:
+                file_timestamp = files.split('_experiment')[1].replace(".csv","")
+                table_entries.append({"timestamp":file_timestamp,"file":file})
+            except (IndexError,ValueError):
+                continue
+        return jsonify({'success': True, 'files': table_entries}), 200
+    
+    @app.route('/download_sim/<stu_number>/<filename>')
+    def download_sim(stu_number, filename):
+        filepath = os.path.join(app.config['SIMS_FOLDER'], str(stu_number), filename)
+        if not os.path.exists(filepath):
+            return jsonify({'success':False, 'message':"file not found"}), 404
+        return send_file(filepath, as_attachment=True)
 
     @app.route("/upload")
     def upload():
         return render_template("upload.html")
-
-    @app.route('/data', methods = ['GET'])
-    def data():
-        return jsonify(result=random.randint(0,10)) 
 
     def allowed_file(filename):
         return '.' in filename and \
@@ -83,7 +104,7 @@ def register_routes(app):
             file_path = os.path.join(stu_dir, filename)
             file.save(file_path)
             return jsonify({'success':True, 'message':'File upload success','filename':filename}), 200
-        return jsonify({'success':False, 'message':'File type not allowed'})
+        return jsonify({'success':False, 'message':'File type not allowed'}), 400
     
     @app.route('/upload_text/<stu_number>', methods=['POST'])
     def upload_text(stu_number):
@@ -101,13 +122,12 @@ def register_routes(app):
             f.close()
         return jsonify({'success': True, 'message':'saved'}), 200
 
-    @app.route('/mqtt_test', methods=['POST'])
-    def mqtt_test():
-        global actuator
-        actuator = request.form['message']
-        (result, mid) = mqtt.publish('home/actuator', int(actuator).to_bytes(1,'big'))
-        if(result == mqtt_client.MQTT_ERR_SUCCESS):
-            print("MQTT message success - " + actuator)
-        else:
-            print("MQTT message failed. Error: " + result)
-        return redirect(url_for('graph'))
+    @app.route('/start_experiment/<stu_number>', methods=['GET','POST'])
+    def start_experiment(stu_number):
+        try:
+            from app import socketio
+            control_mode('remote')
+            socketio.start_backgroung_task(run_sim, stu_number)
+            return jsonify({'success':True, 'message':'Sim started'}), 200
+        except Exception as e:
+            return jsonify({'success':False, 'message':str(e)}), 500

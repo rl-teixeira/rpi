@@ -55,7 +55,7 @@ socket.on('connect', ()=>{
     console.log('Connected to server')
 })
 
-socket.on('message', (msg)=>{
+/*socket.on('message', (msg)=>{
     console.log("MQTT message received");
     const msg_json = JSON.parse(msg);
     const sensorData = msg_json.sensor;
@@ -69,4 +69,22 @@ socket.on('message', (msg)=>{
 
     // update chart
     chart.update();
+})*/
+
+socket.on('sim_update', (msg)=>{
+    const msg_json = JSON.parse(msg);
+    const referenceData = msg_json.reference;
+    const sensorData = msg_json.sensor;
+    const actuatorData = msg_json.actuator;
+    const timestamp = msg_json.timestamp;
+
+    data.labels.push(timestamp);
+    data.datasets[0].data.push(sensorData);
+    data.datasets[1].data.push(actuatorData);
+    data.datasets[2].data.push(referenceData);
+
+    chart.update();
+})
+socket.on('sim-end', (msg)=>{
+
 })

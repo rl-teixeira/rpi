@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="simulations-container">
+    <div class="start-sim-container">
+        <h2 style="text-align: center; margin-top: 40px;">Start a New Simulation</h2>
+        <button id="start-sim-btn" class="btn">Start Simulation</button>
+    </div>
+    
+    <div id="sims-table-container" class="sims-table-container hidden">
+        <h3 style="text-align: center;">Previous Simulations</h3>
+        <table id="sims-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Simulation</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    <div id="graph-container" class="hidden">
+        <h3>Simulation Results</h3>
+        <canvas id="graph"></canvas>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/chart.umd.js')}}"></script>
+<script src="{{ url_for('static', filename='js/socket.io.js')}}"></script>
+<script type="module" src="{{ url_for('static', filename='js/simulations.js')}}"></script>
+{% endblock %}

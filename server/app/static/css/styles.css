@@ -194,6 +194,45 @@ footer {
     transform: translateX(-50%);
 }
 
+.simulations-container{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sims-table-container{
+    margin: 20px;
+}
+
+#simulation-table {
+    width: 100%;
+    border-collapse: collapse;  
+    margin-top: 20px;
+}
+
+#simulation-table thead {
+    background-color: #538392; 
+    color: white; 
+    font-weight: bold;
+    margin: 20px 0px;
+    border: 2px solid black; 
+}
+
+#simulation-table th {
+    border: 2px solid black; 
+    padding: 10px;
+    text-align: center;
+}
+
+#simulation-table td {
+    border: 2px solid black; 
+    padding: 10px;
+    text-align: center;
+}
+
+#simulation-table tr:hover {
+    background-color: #ddd;
+}
+
 main {
     padding: 1em;
     margin-top: 60px;

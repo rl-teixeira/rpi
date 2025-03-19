@@ -9,4 +9,5 @@ class Config:
     MQTT_KEEPALIVE = 5
     MQTT_TLS_ENABLED = False
     UPLOAD_FOLDER = os.path.join(os.getcwd(),'instance','uploads')
+    SIMS_FOLDER = os.path.join(os.getcwd(), 'instance', 'simulations')
     MAX_CONTENT_LENGTH = 10*1024*1024 #file size limit 10MB

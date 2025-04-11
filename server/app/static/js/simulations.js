@@ -103,6 +103,7 @@ async function fetchSimulations() {
                 <td>${entry.timestamp}</td>
                 <td>${entry.file}</td>
             `
+            table.appendChild(row);
             row.addEventListener('click', () => {
                 document.getElementById("graph-container").classList.remove('hidden');
                 plotSimulation(stuNumber, entry.file);

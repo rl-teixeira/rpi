@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" />
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico')}}"/>
-        <title>Hello</title>
+        <title>Control Remote Lab</title>
     </head>
     <body>
         <header>
@@ -25,14 +25,14 @@
             {% block content %}
             <!--This will be filled in with each template-->
             {% endblock %}
-            <div class="logged-table">
+            <!--<div class="logged-table">
                 <table id="number-email"><tbody></tbody></table>
-            </div>
+            </div>-->
         </main>
         <footer>
             <div class="center">
-                <p>ok, this kinda works<p/>
-                <img src="{{ url_for('static', filename='/images/imaybestupid.jpg')}}" width="70" height="40" style="padding: 0px; margin: 0 10px;">
+                <!--<p>ok, this kinda works<p/>-->
+                <!--<img src="{{ url_for('static', filename='/images/imaybestupid.jpg')}}" width="70" height="40" style="padding: 0px; margin: 0 10px;">-->
             </div>
         </footer>
         <script type="module" src="{{ url_for('static', filename='js/index.js')}}"></script>

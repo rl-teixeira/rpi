@@ -46,7 +46,7 @@ def run_sim(stu_number):
                 return
             send_u(u)
             timestamp = time.time() - time_start
-            data = [timestamp,r,u,y]
+            data = [timestamp,r,u,y] #[t,r,y,u]
             result.append(data)
             pong = int(time.time())
             remaining_time = (Ts/1000) - (pong - ping)

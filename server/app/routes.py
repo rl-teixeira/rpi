@@ -67,7 +67,7 @@ def register_routes(app):
         table_entries = []
         for file in files:
             try:
-                file_timestamp = files.split('_experiment')[1].replace(".csv","")
+                file_timestamp = file.split('_experiment')[1].replace(".csv","")
                 table_entries.append({"timestamp":file_timestamp,"file":file})
             except (IndexError,ValueError):
                 continue
@@ -127,7 +127,7 @@ def register_routes(app):
         try:
             from app import socketio
             control_mode('remote')
-            socketio.start_backgroung_task(run_sim, stu_number)
+            socketio.start_background_task(run_sim, stu_number)
             return jsonify({'success':True, 'message':'Sim started'}), 200
         except Exception as e:
             return jsonify({'success':False, 'message':str(e)}), 500
